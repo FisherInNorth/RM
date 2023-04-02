@@ -1,0 +1,56 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8080
+# Spring配置
+spring:
+  # 应用名称
+  application:
+    name: cloudclass
+  profiles:
+    active: dev
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    # url: jdbc:mysql://127.0.0.1:3388/java_example?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://39.103.223.226:3388/java_202109_04?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    # 连接数据库用户名
+    # username: nequ_java
+    username: java_202109
+    # 连接数据库密码
+    # password: kdny168666
+    password: kdny168168
+    # 设置驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 连接池设置
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 初始化时建立物理连接的个数
+    initialSize: 10
+    # 最大连接池数量
+    maxActive: 50
+    # 最小连接池数量
+    minIdle: 10
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: cloudclass.**.model
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:com.neuq.cloudclass04.mapper/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

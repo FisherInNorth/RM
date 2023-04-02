@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 定义数据库访问操作SQL语句 -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cloudclass.mapper.AllClassMapper">
+    <!-- 上一行是Java文件对应的路径映射-->
+
+    <resultMap type="AllClass" id="allClassResult">
+        <id property="id" column="id"/>
+        <result property="subject" column="subject"/>
+        <result property="courseId" column="course_id"/>
+        <result property="teacher" column="teacher"/>
+        <result property="room" column="room"/>
+        <result property="courseNumber" column="course_number"/>
+        <result property="begintime" column="begintime"/>
+        <result property="endtime" column="endtime"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectFields">
+        select
+        id,
+        subject,
+        course_id,
+        teacher,
+        room,
+        course_number,
+        begintime,
+        endtime,
+        create_time,
+        update_time
+        from all_class
+    </sql>
+    <select id="selectAllSc" resultMap="allClassResult">
+        <include refid="selectFields"/>
+    </select>
+
+    <select id="selectBycourseIdSc" resultMap="allClassResult">
+        <include refid="selectFields"/>
+        where course_id=#{CourseId}
+    </select>
+
+    <insert id="insertSc" parameterType="AllClass">
+        insert into all_class(
+        id,
+        <if test="subject != null and subject != ''">subject,</if>
+        <if test="courseId != null and courseId != ''">course_id,</if>
+        <if test="teacher != null and teacher != ''">teacher,</if>
+        <if test="room != null and sex != ''">room,</if>
+        <if test="courseNumber != null and courseNumber != ''">course_number,</if>
+        <if test="begintime != null and begintime != ''">begintime,</if>
+        <if test="endtime != null and endtime != ''">endtime,</if>
+        <if test="createTime != null and createTime != ''">create_time,</if>
+        create_time
+        ) values (
+        #{id}
+        <if test="subject != null and subject != ''">#{subject},</if>
+        <if test="courseId != null and courseId != ''">#{courseId},</if>
+        <if test="teacher != null and teacher != ''">#{teacher},</if>
+        <if test="room != null">#{room},</if>
+        <if test="courseNumber != null">#{courseNumber},</if>
+        <if test="begintime != null">begintime,</if>
+        <if test="endtime != null and endtime != ''">#{endtime},</if>
+        <if test="createTime != null and createTime != ''">#{createTime},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateSc" parameterType="AllClass">
+        update all_class
+        <set>
+            <if test="subject != null and subject != ''">subject = #{subject},</if>
+            <if test="courseId != null and courseId != ''">course_id = #{courseId},</if>
+            <if test="teacher != null and teacher != ''">teacher = #{teacher},</if>
+            <if test="room != null">room = #{room},</if>
+            <if test="courseNumber != null">course_number = #{courseNumber},</if>
+            <if test="begintime != null and begintime != ''">begintime = #{begintime},</if>
+            <if test="endtime != null and endtime != ''">endtime = #{endtime},</if>
+            <if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="Delete" parameterType="AllClass">
+        delete from all_class where course_id = #{courseId}
+    </delete>
+</mapper>
